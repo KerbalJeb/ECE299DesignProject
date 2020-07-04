@@ -9,8 +9,6 @@ before_install:
   - tar xf arduino-1.8.13-linux64.tar.xz
   - sudo mv arduino-1.8.13 /usr/local/share/arduino
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
-  - arduino --install-boards "arduino:avr:1.8.13"
-
 
 script:
   # We use the docker image from https://hub.docker.com/r/dxjoke/tectonic-docker/
