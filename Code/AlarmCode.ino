@@ -11,7 +11,7 @@ ECE299 Lab3
 The GPIO pins connected to the 7 segment dispaly in order
 from sement A-G
 */
-int segment_pins[] = {6,7,8,9,10,11, 12}
+int segment_pins[] = {6,7,8,9,10,11, 12};
 
 /*
 Maps integer values to a byte than encodes what segments 
