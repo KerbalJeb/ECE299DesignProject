@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{latexsym,amssymb,amsmath,mathtools}
+\usepackage{subcaption,float}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titling}
+\usepackage{siunitx}
+\usepackage{pdflscape}
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\usepackage{sectsty}
+\allsectionsfont{\normalfont\sffamily\bfseries}
+
+
+\addtolength{\jot}{1em}
+
+
+\usepackage{geometry}
+\geometry{
+    letterpaper,
+    hmargin=3cm,
+    vmargin=2cm,
+}
+
+\title{\bfseries\Huge\sffamily{ECE299 Design Report -- Title\\B03}}
+\author{\sffamily Ben Kellman --\textit{V00898289}\\ \sffamily Adam Carloni --\textit{V00886669}}
+\date{\sffamily May 27, 2020}
+
+
+
+\begin{document}
+
+\begin{titlingpage}
+\maketitle
+\end{titlingpage}
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\section{Introduction}
+\paragraph{}
+
+\subsection{Requirement Specifications}
+\paragraph{}
+
+\section{Design Overview}
+\paragraph{}
+
+\subsection{Schematic}
+\paragraph{}
+
+\subsection{BoM}
+\begin{landscape}
+\thispagestyle{empty}
+
+\subsection{BoM}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c}
+    Desiccator(s)&Manufacturer Part Number&Manufacturer&Quantity&Unit Price&Extended Price&Description\\
+    \hline
+
+    \hline
+    &&&&\textbf{Total}&\textbf{\$47.30}&
+    \end{tabular}
+    \caption{BoM}
+    \label{tab:bom}
+\end{table}
+
+\vfill
+\raisebox{5em}{\makebox[\linewidth]{\thepage}}
+\end{landscape}
+
+\section{Implementation}
+
+\subsection{Validation}
+
+\nocite{*}
+\bibliographystyle{IEEEtran}
+\bibliography{ref}
+
+
+\end{document}

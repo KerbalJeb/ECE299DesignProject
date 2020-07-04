@@ -1,0 +1,22 @@
+
+sudo: required
+language: generic
+services: docker
+
+script:
+  # We use the docker image from https://hub.docker.com/r/dxjoke/tectonic-docker/
+  # Compiling only main.tex:
+  - docker run --mount src=$TRAVIS_BUILD_DIR/Report,target=/usr/src/tex,type=bind dxjoke/tectonic-docker /bin/sh -c "tectonic main.tex"
+
+
+deploy:
+  provider: releases
+  api_key:
+    secure: c2VStvGvrfmj4XK4XEOhwThQDOTaTVGBg+KPUhbkpT5kXUnFNqzV3flIZ58Pdv4Ixh/5ePKvfaPbGn1NMPHIRbE7bPSEvkCmAZqONfF6ZpbW358TV2+EVG1TByW7NQhNgQdspwSTyinWDhTxMxsPcymIaE4qQGiVsH0kBoXHidnnK9UYa1O0jCHfagL8mXNbOtgb0pweM7OkDIMYDAGuH+CJXT/IH5umowiKvh5ka43hAa5+24aJTtV+TBYVL2ODIwZo6HPOC0CLSKOSTFxrZASF65YWaXURjUSV3T9Yx4KfGO8ad+l8RsqhwerxfMcl+0mG2RkcGP1BN8tScI153tckByAUaX2X8HbQtDnANT7DTULYh62CESnJDqZreyQw4qCRuTaD/CtBkGnA1JFbRUzxsN5DTo7MxpKFaIutn1MYfU35sLE5Fw3Uc2W6JrjNGdZak9rea4wC+eo0ns+HW5NOgK5q30v/w10NNafBl5Q8vZ1SI9TYbWEL3zreAaqtIpmW6kIGHtSpaDVx/drwtsyBhW9SlAucP8hurEZSuK38DiNgaB/mGtcLdCRDsyB2r7WS+r573L0mAyx0yuzrIX4ZI7G69224xtqaLGxcQeWEqgT5qW8OZcizNwK6PUlGeaUEG/9ddh5BwJZU1qPNA0sq9Z39LnMScAXiUBkAlik=
+  file: 
+    - Report/main.pdf
+  on:
+    repo: KerbalJeb/ECE299DesignProject
+    branch: Latex-Integration
+    draft: true
+  skip_cleanup: 'true'
