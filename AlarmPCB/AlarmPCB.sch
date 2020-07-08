@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:AlarmPCB-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -15,7 +14,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L MCU_Module:Arduino_UNO_R3 A?
+L AlarmPCB-rescue:Arduino_UNO_R3-MCU_Module A?
 U 1 1 5EFF97DB
 P 3100 4000
 F 0 "A?" H 3100 5181 50  0000 C CNN
@@ -57,10 +56,10 @@ Wire Wire Line
 Wire Wire Line
 	3100 5100 3100 5250
 $Comp
-L Display_Character:WC1602A DS?
+L Display_Character:WC1602A Test
 U 1 1 5F063F5F
 P 5950 4050
-F 0 "DS?" H 5950 5031 50  0000 C CNN
+F 0 "Test" H 5950 5031 50  0000 C CNN
 F 1 "WC1602A" H 5950 4940 50  0000 C CNN
 F 2 "Display:WC1602A" H 5950 3150 50  0001 C CIN
 F 3 "http://www.wincomlcd.com/pdf/WC1602A-SFYLYHTC06.pdf" H 6650 4050 50  0001 C CNN
