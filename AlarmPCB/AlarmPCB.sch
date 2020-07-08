@@ -1,12 +1,13 @@
 EESchema Schematic File Version 4
+LIBS:AlarmPCB-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
+Title "ECE299 Alarm Clock Project"
+Date "2020-07-08"
+Rev "1"
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -14,56 +15,517 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L AlarmPCB-rescue:Arduino_UNO_R3-MCU_Module A?
+L MCU_Module:Arduino_UNO_R3 A1
 U 1 1 5EFF97DB
-P 3100 4000
-F 0 "A?" H 3100 5181 50  0000 C CNN
-F 1 "Arduino_UNO_R3" H 2550 5100 50  0000 C CNN
-F 2 "Module:Arduino_UNO_R3" H 3250 2950 50  0001 L CNN
-F 3 "https://www.arduino.cc/en/Main/arduinoBoardUno" H 2900 5050 50  0001 C CNN
-	1    3100 4000
-	1    0    0    -1  
+P 2100 3950
+F 0 "A1" H 2100 5131 50  0000 C CNN
+F 1 "Arduino_UNO_R3" H 1550 5050 50  0000 C CNN
+F 2 "Module:Arduino_UNO_R3" H 2250 2900 50  0001 L CNN
+F 3 "https://www.arduino.cc/en/Main/arduinoBoardUno" H 1900 5000 50  0001 C CNN
+	1    2100 3950
+	-1   0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR03
 U 1 1 5EFFE387
-P 3100 5250
-F 0 "#PWR?" H 3100 5000 50  0001 C CNN
-F 1 "GND" H 3105 5077 50  0000 C CNN
-F 2 "" H 3100 5250 50  0001 C CNN
-F 3 "" H 3100 5250 50  0001 C CNN
-	1    3100 5250
-	1    0    0    -1  
+P 2100 5200
+F 0 "#PWR03" H 2100 4950 50  0001 C CNN
+F 1 "GND" H 2105 5027 50  0000 C CNN
+F 2 "" H 2100 5200 50  0001 C CNN
+F 3 "" H 2100 5200 50  0001 C CNN
+	1    2100 5200
+	-1   0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR?
+L power:+5V #PWR04
 U 1 1 5EFFECEC
-P 3300 2750
-F 0 "#PWR?" H 3300 2600 50  0001 C CNN
-F 1 "+5V" H 3315 2923 50  0000 C CNN
-F 2 "" H 3300 2750 50  0001 C CNN
-F 3 "" H 3300 2750 50  0001 C CNN
-	1    3300 2750
-	1    0    0    -1  
+P 1900 2700
+F 0 "#PWR04" H 1900 2550 50  0001 C CNN
+F 1 "+5V" H 1915 2873 50  0000 C CNN
+F 2 "" H 1900 2700 50  0001 C CNN
+F 3 "" H 1900 2700 50  0001 C CNN
+	1    1900 2700
+	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	3300 2750 3300 3000
+	1900 2700 1900 2950
 Wire Wire Line
-	3000 5100 3100 5100
-Connection ~ 3100 5100
+	2200 5050 2100 5050
+Connection ~ 2100 5050
 Wire Wire Line
-	3100 5100 3200 5100
+	2100 5050 2000 5050
 Wire Wire Line
-	3100 5100 3100 5250
+	2100 5050 2100 5200
 $Comp
-L Display_Character:WC1602A Test
+L Display_Character:WC1602A DS1
 U 1 1 5F063F5F
-P 5950 4050
-F 0 "Test" H 5950 5031 50  0000 C CNN
-F 1 "WC1602A" H 5950 4940 50  0000 C CNN
-F 2 "Display:WC1602A" H 5950 3150 50  0001 C CIN
-F 3 "http://www.wincomlcd.com/pdf/WC1602A-SFYLYHTC06.pdf" H 6650 4050 50  0001 C CNN
-	1    5950 4050
+P 5050 5500
+F 0 "DS1" H 5350 6500 50  0000 C CNN
+F 1 "WC1602A" H 5450 6350 50  0000 C CNN
+F 2 "Display:WC1602A" H 5050 4600 50  0001 C CIN
+F 3 "http://www.wincomlcd.com/pdf/WC1602A-SFYLYHTC06.pdf" H 5750 5500 50  0001 C CNN
+	1    5050 5500
 	1    0    0    -1  
 $EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 5F06DAC4
+P 5050 6300
+F 0 "#PWR02" H 5050 6050 50  0001 C CNN
+F 1 "GND" H 5055 6127 50  0000 C CNN
+F 2 "" H 5050 6300 50  0001 C CNN
+F 3 "" H 5050 6300 50  0001 C CNN
+	1    5050 6300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR01
+U 1 1 5F06E403
+P 5050 4550
+F 0 "#PWR01" H 5050 4400 50  0001 C CNN
+F 1 "+5V" H 5065 4723 50  0000 C CNN
+F 2 "" H 5050 4550 50  0001 C CNN
+F 3 "" H 5050 4550 50  0001 C CNN
+	1    5050 4550
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 4550 5050 4700
+Wire Wire Line
+	4650 4900 4300 4900
+Wire Wire Line
+	4650 5100 4300 5100
+Wire Wire Line
+	4650 5000 4500 5000
+Wire Wire Line
+	4500 5000 4500 5250
+$Comp
+L power:GND #PWR05
+U 1 1 5F070A81
+P 4500 5250
+F 0 "#PWR05" H 4500 5000 50  0001 C CNN
+F 1 "GND" H 4400 5250 50  0000 C CNN
+F 2 "" H 4500 5250 50  0001 C CNN
+F 3 "" H 4500 5250 50  0001 C CNN
+	1    4500 5250
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4650 6100 4300 6100
+Wire Wire Line
+	4650 6000 4300 6000
+Wire Wire Line
+	4650 5900 4300 5900
+Wire Wire Line
+	4650 5800 4300 5800
+Wire Wire Line
+	5450 5300 5550 5300
+Wire Wire Line
+	5550 5300 5550 5550
+$Comp
+L Device:R_Small_US R1
+U 1 1 5F073E17
+P 5550 5650
+F 0 "R1" H 5618 5696 50  0000 L CNN
+F 1 "R_Small_US" V 5350 5550 50  0000 L CNN
+F 2 "" H 5550 5650 50  0001 C CNN
+F 3 "~" H 5550 5650 50  0001 C CNN
+	1    5550 5650
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR07
+U 1 1 5F075220
+P 5550 5850
+F 0 "#PWR07" H 5550 5600 50  0001 C CNN
+F 1 "GND" H 5555 5677 50  0000 C CNN
+F 2 "" H 5550 5850 50  0001 C CNN
+F 3 "" H 5550 5850 50  0001 C CNN
+	1    5550 5850
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5550 5850 5550 5750
+Text Label 4300 4900 0    50   ~ 0
+E
+Text Label 4300 5100 0    50   ~ 0
+RS
+Text Label 4300 6100 0    50   ~ 0
+D7
+Text Label 4300 6000 0    50   ~ 0
+D6
+Text Label 4300 5900 0    50   ~ 0
+D5
+Text Label 4300 5800 0    50   ~ 0
+D4
+Wire Wire Line
+	5450 5200 5900 5200
+Text Label 5900 5200 2    50   ~ 0
+Backlight
+Wire Wire Line
+	2600 4550 2950 4550
+Wire Wire Line
+	2600 4450 2950 4450
+Wire Wire Line
+	2600 4350 2950 4350
+Wire Wire Line
+	2600 3850 2950 3850
+Wire Wire Line
+	2600 3750 2950 3750
+Wire Wire Line
+	2600 3650 2950 3650
+Wire Wire Line
+	2600 3550 2950 3550
+Text Label 2950 4550 2    50   ~ 0
+RS
+Text Label 2950 4350 2    50   ~ 0
+Backlight
+Text Label 2950 4450 2    50   ~ 0
+E
+Text Label 2950 3850 2    50   ~ 0
+D4
+Text Label 2950 3750 2    50   ~ 0
+D5
+Text Label 2950 3650 2    50   ~ 0
+D6
+Text Label 2950 3550 2    50   ~ 0
+D7
+$Comp
+L Switch:SW_Push SW1
+U 1 1 5F088DBE
+P 4900 2100
+F 0 "SW1" H 4700 2200 50  0000 C CNN
+F 1 "TimeUp" H 5350 2200 50  0000 C CNN
+F 2 "" H 4900 2300 50  0001 C CNN
+F 3 "~" H 4900 2300 50  0001 C CNN
+	1    4900 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW2
+U 1 1 5F08BB18
+P 4900 2300
+F 0 "SW2" H 4700 2400 50  0000 C CNN
+F 1 "TimeDown" H 5400 2400 50  0000 C CNN
+F 2 "" H 4900 2500 50  0001 C CNN
+F 3 "~" H 4900 2500 50  0001 C CNN
+	1    4900 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW4
+U 1 1 5F08C341
+P 4900 2500
+F 0 "SW4" H 4700 2600 50  0000 C CNN
+F 1 "AlarmSet" H 5400 2600 50  0000 C CNN
+F 2 "" H 4900 2700 50  0001 C CNN
+F 3 "~" H 4900 2700 50  0001 C CNN
+	1    4900 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW5
+U 1 1 5F08C740
+P 4900 2700
+F 0 "SW5" H 4700 2800 50  0000 C CNN
+F 1 "CancelAlarm" H 5450 2800 50  0000 C CNN
+F 2 "" H 4900 2900 50  0001 C CNN
+F 3 "~" H 4900 2900 50  0001 C CNN
+	1    4900 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW6
+U 1 1 5F08C9FC
+P 4900 2900
+F 0 "SW6" H 4700 3000 50  0000 C CNN
+F 1 "Snooze" H 5350 3000 50  0000 C CNN
+F 2 "" H 4900 3100 50  0001 C CNN
+F 3 "~" H 4900 3100 50  0001 C CNN
+	1    4900 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_Push SW7
+U 1 1 5F08CE62
+P 4900 3100
+F 0 "SW7" H 4700 3200 50  0000 C CNN
+F 1 "Backlight" H 5400 3200 50  0000 C CNN
+F 2 "" H 4900 3300 50  0001 C CNN
+F 3 "~" H 4900 3300 50  0001 C CNN
+	1    4900 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 2100 5150 2100
+Wire Wire Line
+	5150 2100 5150 2300
+Wire Wire Line
+	5100 2300 5150 2300
+Connection ~ 5150 2300
+Wire Wire Line
+	5100 2500 5150 2500
+Connection ~ 5150 2500
+Wire Wire Line
+	5150 2500 5150 2700
+Wire Wire Line
+	5100 2700 5150 2700
+Connection ~ 5150 2700
+Wire Wire Line
+	5150 2700 5150 2900
+Wire Wire Line
+	5100 2900 5150 2900
+Connection ~ 5150 2900
+Wire Wire Line
+	5150 2900 5150 3100
+Wire Wire Line
+	5100 3100 5150 3100
+Connection ~ 5150 3100
+Wire Wire Line
+	5150 3100 5150 3250
+$Comp
+L power:GND #PWR06
+U 1 1 5F092395
+P 5150 3250
+F 0 "#PWR06" H 5150 3000 50  0001 C CNN
+F 1 "GND" H 5155 3077 50  0000 C CNN
+F 2 "" H 5150 3250 50  0001 C CNN
+F 3 "" H 5150 3250 50  0001 C CNN
+	1    5150 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 2100 4350 2100
+Wire Wire Line
+	4700 2300 4350 2300
+Wire Wire Line
+	4700 2500 4350 2500
+Wire Wire Line
+	4700 2700 4350 2700
+Wire Wire Line
+	4700 2900 4350 2900
+Wire Wire Line
+	4700 3100 4350 3100
+Text Label 4350 2100 0    50   ~ 0
+T+
+Text Label 4350 2300 0    50   ~ 0
+T-
+Text Label 4350 2500 0    50   ~ 0
+AS
+Text Label 4350 2700 0    50   ~ 0
+CA
+Text Label 4350 2900 0    50   ~ 0
+Sn
+Text Label 4350 3100 0    50   ~ 0
+BL
+Wire Wire Line
+	1600 3950 1200 3950
+Text Label 1200 3950 0    50   ~ 0
+Light
+Wire Wire Line
+	2600 3950 2950 3950
+Wire Wire Line
+	2600 4050 2950 4050
+Wire Wire Line
+	2600 4250 2950 4250
+Wire Wire Line
+	1600 4050 1200 4050
+Wire Wire Line
+	1600 4150 1200 4150
+Wire Wire Line
+	1600 4250 1200 4250
+Text Label 2950 3950 2    50   ~ 0
+T+
+Text Label 2950 4050 2    50   ~ 0
+T-
+Text Label 1200 4050 0    50   ~ 0
+CA
+Text Label 1200 4150 0    50   ~ 0
+Sn
+Text Label 1200 4250 0    50   ~ 0
+BL
+Wire Wire Line
+	1600 4350 1200 4350
+Text Label 1200 4350 0    50   ~ 0
+AS
+Text Label 2950 4250 2    50   ~ 0
+Buz
+$Comp
+L power:GND #PWR012
+U 1 1 5F0FE179
+P 7950 5700
+F 0 "#PWR012" H 7950 5450 50  0001 C CNN
+F 1 "GND" H 7955 5527 50  0000 C CNN
+F 2 "" H 7950 5700 50  0001 C CNN
+F 3 "" H 7950 5700 50  0001 C CNN
+	1    7950 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR011
+U 1 1 5F0FF000
+P 7950 4650
+F 0 "#PWR011" H 7950 4500 50  0001 C CNN
+F 1 "+5V" H 7965 4823 50  0000 C CNN
+F 2 "" H 7950 4650 50  0001 C CNN
+F 3 "" H 7950 4650 50  0001 C CNN
+	1    7950 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7950 5150 7550 5150
+Connection ~ 7950 5150
+$Comp
+L Device:R_PHOTO R3
+U 1 1 5F0F643D
+P 7950 5450
+F 0 "R3" H 8020 5496 50  0000 L CNN
+F 1 "R_PHOTO" H 8020 5405 50  0000 L CNN
+F 2 "" V 8000 5200 50  0001 L CNN
+F 3 "~" H 7950 5400 50  0001 C CNN
+	1    7950 5450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7950 5150 7950 5300
+Wire Wire Line
+	7950 5600 7950 5700
+$Comp
+L Device:R_Small_US R2
+U 1 1 5F0F87BD
+P 7950 4900
+F 0 "R2" H 8018 4946 50  0000 L CNN
+F 1 "R_Small_US" V 7750 4800 50  0000 L CNN
+F 2 "" H 7950 4900 50  0001 C CNN
+F 3 "~" H 7950 4900 50  0001 C CNN
+	1    7950 4900
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	7950 4800 7950 4650
+Wire Wire Line
+	7950 5000 7950 5150
+Text Label 7550 5150 0    50   ~ 0
+Light
+$Comp
+L Device:Buzzer BZ1
+U 1 1 5F11CBF0
+P 7700 3200
+F 0 "BZ1" H 7852 3229 50  0000 L CNN
+F 1 "Buzzer" H 7852 3138 50  0000 L CNN
+F 2 "" V 7675 3300 50  0001 C CNN
+F 3 "~" V 7675 3300 50  0001 C CNN
+	1    7700 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7600 3300 7450 3300
+Wire Wire Line
+	7450 3300 7450 3500
+$Comp
+L power:GND #PWR010
+U 1 1 5F12026B
+P 7450 3500
+F 0 "#PWR010" H 7450 3250 50  0001 C CNN
+F 1 "GND" H 7455 3327 50  0000 C CNN
+F 2 "" H 7450 3500 50  0001 C CNN
+F 3 "" H 7450 3500 50  0001 C CNN
+	1    7450 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7600 3100 7450 3100
+Text Label 7450 3100 0    50   ~ 0
+Buz
+$Comp
+L Device:R_POT RV1
+U 1 1 5F122D0B
+P 6200 4900
+F 0 "RV1" H 6130 4946 50  0000 R CNN
+F 1 "R_POT" H 6130 4855 50  0000 R CNN
+F 2 "" H 6200 4900 50  0001 C CNN
+F 3 "~" H 6200 4900 50  0001 C CNN
+	1    6200 4900
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5450 4900 6050 4900
+$Comp
+L power:GND #PWR09
+U 1 1 5F1298F1
+P 6200 5100
+F 0 "#PWR09" H 6200 4850 50  0001 C CNN
+F 1 "GND" H 6205 4927 50  0000 C CNN
+F 2 "" H 6200 5100 50  0001 C CNN
+F 3 "" H 6200 5100 50  0001 C CNN
+	1    6200 5100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6200 5100 6200 5050
+$Comp
+L power:+5V #PWR08
+U 1 1 5F12BA81
+P 6200 4650
+F 0 "#PWR08" H 6200 4500 50  0001 C CNN
+F 1 "+5V" H 6215 4823 50  0000 C CNN
+F 2 "" H 6200 4650 50  0001 C CNN
+F 3 "" H 6200 4650 50  0001 C CNN
+	1    6200 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6200 4650 6200 4750
+Wire Notes Line style solid
+	4200 1650 5800 1650
+Wire Notes Line style solid
+	5800 1650 5800 3600
+Wire Notes Line style solid
+	5800 3600 4200 3600
+Wire Notes Line style solid
+	4200 3600 4200 1650
+Text Notes 4200 1650 0    50   ~ 10
+User Buttons
+Wire Notes Line style solid
+	3300 5550 3300 2400
+Wire Notes Line style solid
+	3300 2400 950  2400
+Wire Notes Line style solid
+	950  2400 950  5550
+Text Notes 950  2350 0    50   ~ 10
+Arduino
+Wire Notes Line style solid
+	950  5550 3300 5550
+Wire Notes Line style solid
+	4250 6650 6650 6650
+Wire Notes Line style solid
+	4250 6650 4250 4250
+Wire Notes Line style solid
+	4250 4250 6650 4250
+Wire Notes Line style solid
+	6650 4250 6650 6650
+Wire Wire Line
+	5150 2300 5150 2500
+Wire Notes Line style solid
+	8150 3750 8150 2850
+Wire Notes Line style solid
+	8150 2850 7300 2850
+Wire Notes Line style solid
+	7300 2850 7300 3750
+Wire Notes Line style solid
+	8150 3750 7300 3750
+Text Notes 4250 4250 0    50   ~ 10
+LCD Display
+Wire Notes Line style solid
+	7300 6000 8500 6000
+Wire Notes Line style solid
+	8500 6000 8500 4350
+Wire Notes Line style solid
+	8500 4350 7300 4350
+Wire Notes Line style solid
+	7300 4350 7300 6000
+Text Notes 7300 4300 0    50   ~ 10
+Light Sensor
+Text Notes 7300 2850 0    50   ~ 10
+Alarm Buzzer
 $EndSCHEMATC
