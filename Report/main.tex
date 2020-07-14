@@ -1,11 +1,19 @@
 \documentclass{article}
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\thesection.\Roman{subsection}}
+
 \usepackage[utf8]{inputenc}
+\usepackage[tocindentauto]{tocstyle}
+\usepackage[hidelinks]{hyperref}
 \usepackage{latexsym,amssymb,amsmath,mathtools}
 \usepackage{subcaption,float}
-\usepackage[hidelinks]{hyperref}
 \usepackage{titling}
 \usepackage{siunitx}
 \usepackage{pdflscape}
+\usepackage{eso-pic}
+\usepackage{picture}
+
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
 
@@ -23,63 +31,97 @@
     vmargin=2cm,
 }
 
-\title{\bfseries\Huge\sffamily{ECE299 Design Report -- Title\\B03}}
-\author{\sffamily Ben Kellman --\textit{V00898289}\\ \sffamily Adam Carloni --\textit{V00886669}}
-\date{\sffamily May 27, 2020}
-
-
 
 \begin{document}
 
-\begin{titlingpage}
-\maketitle
-\end{titlingpage}
-\tableofcontents
-\listoffigures
-\listoftables
+\begin{center}
+    \sffamily{
+        \textbf{
+            \Huge{Alarm Clock Project}\\
+            \vspace{0.5em} \huge{ECE 299}}\\
+        \vspace{1em}\today\\
+    }
+    \vspace{2em}
+    \includegraphics[width=1.43cm]{uvic_logo.png}\\
+    \vspace{4em}
+    \textbf{Group Information}\\
+    Lab Section -- \textit{B03}\\
+    Ben Kellman -- \textit{V00898289}\\
+    Adam Carloni --\textit{V00886669}
+\end{center}
+
+\AddToShipoutPicture*{%
+  \AtPageLowerLeft{%
+    \makebox(\paperwidth,0)[rb]{\includegraphics{uvic_corner_logo.jpg}}%
+  }%
+}
+\pagenumbering{gobble}
 \newpage
 
-\section{Introduction}
+
+\section*{Acknowledgement}
+\addcontentsline{toc}{section}{Acknowledgement}
+\pagenumbering{roman}
+\newpage
+\tableofcontents
+\newpage
+\listoftables
+\addcontentsline{toc}{section}{List of Tables}
+\newpage
+\listoffigures
+\addcontentsline{toc}{section}{List of Figures}
+\newpage
+
+
+\pagenumbering{arabic}
+\section{Project Goal}
 \paragraph{}
 
-\subsection{Requirement Specifications}
+\section{Constraints}
 \paragraph{}
 
-\section{Design Overview}
+\section{Requirement Specifications}
 \paragraph{}
 
-\subsection{Schematic}
-\paragraph{}
-
-\subsection{BoM}
 \begin{landscape}
 \thispagestyle{empty}
 
-\subsection{BoM}
+\section{Bill of Materials}
 \begin{table}[h!]
     \centering
     \begin{tabular}{c|c|c|c|c|c|c}
-    Desiccator(s)&Manufacturer Part Number&Manufacturer&Quantity&Unit Price&Extended Price&Description\\
+    Designator(s)&Manufacturer Part Number&Manufacturer&Quantity&Unit Price&Extended Price&Description\\
     \hline
-
+    &&&&&&\\
     \hline
-    &&&&\textbf{Total}&\textbf{\$47.30}&
+    &&&&\textbf{Total}&\textbf{\$00.00}&
     \end{tabular}
     \caption{BoM}
     \label{tab:bom}
 \end{table}
 
 \vfill
-\raisebox{5em}{\makebox[\linewidth]{\thepage}}
+{\makebox[\linewidth]{\thepage}}
 \end{landscape}
 
-\section{Implementation}
+\section{Circuit Schematic \& PCB}
+\paragraph{}
 
-\subsection{Validation}
+\section{Testing \& Validation}
+\paragraph{}
+
+\section{Conclusions \& Recommendations}
+\paragraph{}
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
 
 \nocite{*}
 \bibliographystyle{IEEEtran}
 \bibliography{ref}
+
+\appendix
+\section{Enclosure Details}
 
 
 \end{document}
