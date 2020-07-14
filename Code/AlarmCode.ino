@@ -69,12 +69,14 @@ void updateTime()
     }
 }
 
-void displayTime(unsigned char hours, unsigned char minutes, unsigned char seconds){
+void displayTime(unsigned char hours, unsigned char minutes, unsigned char seconds)
+{
     sprintf(timeString, "    %02d:%02d:%02d", hours, minutes, seconds);
     lcd.setCursor(0, 0);
     lcd.print(timeString);
 }
 
-void setBacklight(BacklightBrightness state){
+void setBacklight(BacklightBrightness state)
+{
     analogWrite(BACKLIGHT_PIN, state);
 }
