@@ -303,7 +303,7 @@ void loop()
      *
      */
     switch (CurrentState)
-    {
+    { // TODO: Add alarm triggered, snooze, and adjust backlight states
         /**
          * @brief The state the alarm enters after a reset
          *
@@ -362,7 +362,7 @@ void loop()
             displayTime((void*)&AlarmTime, true);
         }
 
-        /* TODO: Add Backlight input check */
+        //TODO: Add Backlight input check and check for alarm being triggered (probably only need to check in CLOCK)
         break;
 
     /**
@@ -487,6 +487,8 @@ void loop()
         #endif
         break;
     }
+
+    // TODO: Add Brightness contorl state maching here
 
     /*Update Logic*/
     if (ClockRunning)
