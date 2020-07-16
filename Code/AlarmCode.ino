@@ -10,7 +10,7 @@
 #define B_SNOOZE      A2
 #define B_CANCEL      A1
 #define B_BACKLIGHT   A3
-#define B_ALARM_SET         A4
+#define B_ALARM_SET   A4
 
 #define BACKLIGHT_PIN 10
 #define LIGHT_SENSE   A0
@@ -152,7 +152,7 @@ void setup()
     pinMode(B_SNOOZE   , INPUT_PULLUP);
     pinMode(B_CANCEL   , INPUT_PULLUP);
     pinMode(B_BACKLIGHT, INPUT_PULLUP);
-    pinMode(B_ALARM_SET      , INPUT_PULLUP);
+    pinMode(B_ALARM_SET, INPUT_PULLUP);
 
 
     setBacklight(MED);
