@@ -10,13 +10,16 @@
 #define B_SNOOZE      A2
 #define B_CANCEL      A1
 #define B_BACKLIGHT   A3
-#define B_SET         A4
+#define B_ALARM_SET         A4
 
 #define BACKLIGHT_PIN 10
 #define LIGHT_SENSE   A0
 #define BUZZER        9
 
 #define nullptr NULL
+#define ALARM_ENABLED_MSG  "Alarm Enabled   "
+#define ALARM_DISABLED_MSG "Alarm Disabled  "
+
 
 struct Button
 {
@@ -96,7 +99,7 @@ struct Time
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 bool ClockRunning = false;
-bool AlarmActive;
+bool AlarmActive = false;
 
 enum BacklightBrightness{
     OFF = 0,
@@ -107,6 +110,7 @@ enum BacklightBrightness{
 
 enum States{
     TIME_UNSET,
+    ALARM_TIME_SET,
     ALARM_SET,
     CLOCK,
     ALARM_TRIGGERED,
@@ -118,10 +122,11 @@ States CurrentState = TIME_UNSET;
 unsigned long StateChangeTime;
 unsigned long LastIncTime;
 char time_inc_sign;
+bool SettingAlarmTime = false;
 
 void updateTime();
 /* Tinker cad doesn't allow custom types as function parmeters */
-void displayTime(void*);
+void displayTime(void*, bool=false);
 void setBacklight(BacklightBrightness state);
 
 Time CurrentTime;
@@ -147,19 +152,21 @@ void setup()
     pinMode(B_SNOOZE   , INPUT_PULLUP);
     pinMode(B_CANCEL   , INPUT_PULLUP);
     pinMode(B_BACKLIGHT, INPUT_PULLUP);
-    pinMode(B_SET      , INPUT_PULLUP);
+    pinMode(B_ALARM_SET      , INPUT_PULLUP);
 
 
     setBacklight(MED);
     lcd.setCursor(0, 0);
     lcd.print("  Time Not Set  ");
+    lcd.setCursor(0, 1);
+    lcd.print("  No Alarm Set  ");
 
     UI::add_button(B_TIME_INC );
     UI::add_button(B_TIME_DEC );
     UI::add_button(B_SNOOZE   );
     UI::add_button(B_CANCEL   );
     UI::add_button(B_BACKLIGHT);
-    UI::add_button(B_SET      );
+    UI::add_button(B_ALARM_SET);
 }
 
 void loop()
@@ -191,6 +198,8 @@ void loop()
         if (t_inc || t_dec)
         {
             ClockRunning = false;
+            SettingAlarmTime = false;
+            TimeSetTime  = &CurrentTime;
             StateChangeTime = millis();
             LastIncTime = 0;
             TimeSetTime->seconds = 0;
@@ -208,6 +217,14 @@ void loop()
             CurrentState = TIME_CHANGE;
         }
 
+        else if(UI::check_for_press(B_ALARM_SET)){
+            UI::clear_flags();
+            TimeSetTime  = &AlarmTime;
+            CurrentState = ALARM_TIME_SET;
+            lcd.setCursor(0, 1);
+            displayTime((void*)&AlarmTime, true);
+        }
+
         break;
 
     case TIME_CHANGE:
@@ -222,15 +239,89 @@ void loop()
             {
                 TimeSetTime->increment(time_inc_sign*600);
             }
-
-            displayTime((void*)TimeSetTime);
+            displayTime((void*)TimeSetTime, SettingAlarmTime);
         }
 
         if (UI::check_for_release(B_TIME_DEC) || UI::check_for_release(B_TIME_INC))
         {
             ClockRunning = true;
-            UI::clear_flags;
+            UI::clear_flags();
+            if(SettingAlarmTime)
+            {
+                CurrentState = ALARM_TIME_SET;
+            }
+            else
+            {
+                CurrentState = CLOCK;
+            }
+        }
+
+        break;
+
+    case ALARM_TIME_SET:
+        t_inc = UI::check_for_press(B_TIME_INC);
+        t_dec = UI::check_for_press(B_TIME_DEC);
+
+        if (t_inc || t_dec)
+        {
+            StateChangeTime = millis();
+            LastIncTime = 0;
+            TimeSetTime->seconds = 0;
+            SettingAlarmTime = true;
+
+            if (t_inc)
+            {
+                time_inc_sign = 1;
+            }
+
+            else
+            {
+                time_inc_sign = -1;
+            }
+
+            CurrentState = TIME_CHANGE;
+        }
+
+        if (UI::check_for_press(B_ALARM_SET))
+        {
+            CurrentState = ALARM_SET;
+            AlarmActive = true;
+            lcd.setCursor(0, 1);
+            lcd.print(ALARM_ENABLED_MSG);
+        }
+
+        break;
+
+    case ALARM_SET:
+        if (UI::check_for_press(B_TIME_DEC) || UI::check_for_press(B_TIME_DEC))
+        {
+            AlarmActive = !AlarmActive;
+            lcd.setCursor(0, 1);
+
+            if (AlarmActive)
+            {
+                lcd.print(ALARM_ENABLED_MSG);
+            }
+            else
+            {
+                lcd.print(ALARM_DISABLED_MSG);
+            }
+        }
+
+        if (UI::check_for_press(B_ALARM_SET))
+        {
             CurrentState = CLOCK;
+            UI::clear_flags();
+            if (AlarmActive)
+            {
+                displayTime((void*) TimeSetTime, true);
+            }
+            else
+            {
+                lcd.setCursor(0, 1);
+                lcd.print("  No Alarm Set  ");
+            }
+
         }
 
         break;
@@ -265,12 +356,20 @@ void updateTime()
     }
 }
 
-void displayTime(void* time_vp)
+void displayTime(void* time_vp, bool alarm_time)
 {
     Time* time = (Time*)time_vp;
     static char timeString[16];
-    sprintf(timeString, "    %02d:%02d:%02d    ", time->hours, time->minutes, time->seconds);
-    lcd.setCursor(0, 0);
+    if(alarm_time)
+    {
+        lcd.setCursor(0, 1);
+        sprintf(timeString, "Alarm At: %02d:%02d", time->hours, time->minutes);
+    }
+    else
+    {
+        lcd.setCursor(0, 0);
+        sprintf(timeString, "    %02d:%02d:%02d    ", time->hours, time->minutes, time->seconds);
+    }
     lcd.print(timeString);
 }
 
@@ -290,15 +389,15 @@ void UI::add_button(unsigned int pin_id)
     if(head == nullptr){
       head = new_button;
     }
-  	else{
-    	last_node()->next = new_button;
+    else{
+      last_node()->next = new_button;
     }
 }
 
 void UI::poll_buttons()
 {
     Button *button = head;
-    while (button->next != nullptr)
+    while (button != nullptr)
     {
         update_button(button);
         button = button->next;
@@ -308,7 +407,7 @@ void UI::poll_buttons()
 void UI::clear_flags()
 {
     Button *button = head;
-    while (button->next != nullptr)
+    while (button != nullptr)
     {
         button->been_pressed  = false;
         button->been_released = false;
@@ -319,7 +418,7 @@ void UI::clear_flags()
 bool UI::check_for_press(unsigned int pin_id, bool clear)
 {
     Button *button = head;
-    while (button->next != nullptr)
+    while (button != nullptr)
     {
         if (button->pin_id == pin_id)
         {
@@ -334,13 +433,13 @@ bool UI::check_for_press(unsigned int pin_id, bool clear)
 
         button = button->next;
     }
-  	//Serial.println("pin not found");
+    //Serial.println("pin not found");
 }
 
 bool UI::check_for_release(unsigned int pin_id, bool clear)
 {
     Button *button = head;
-    while (button->next != nullptr)
+    while (button != nullptr)
     {
         if (button->pin_id == pin_id)
         {
