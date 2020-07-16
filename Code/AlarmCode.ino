@@ -111,8 +111,7 @@ enum States{
     CLOCK,
     ALARM_TRIGGERED,
     SNOOZEING,
-    TIME_INC_SLOW,
-    TIME_DEC_SLOW
+    TIME_CHANGE
 };
 
 States CurrentState = TIME_UNSET;
@@ -206,12 +205,12 @@ void loop()
                 time_inc_sign = -1;
             }
 
-            CurrentState = TIME_DEC_SLOW;
+            CurrentState = TIME_CHANGE;
         }
 
         break;
 
-    case TIME_DEC_SLOW:
+    case TIME_CHANGE:
         if (millis()-LastIncTime >= INC_DELAY)
         {
             LastIncTime = millis();
@@ -233,7 +232,6 @@ void loop()
             UI::clear_flags;
             CurrentState = CLOCK;
         }
-
 
         break;
 
