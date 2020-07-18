@@ -9,10 +9,13 @@
 
 #include <LiquidCrystal.h>
 
-#define MILLIS_PER_SECOND 100
-#define SLOW_TO_FAST_INC_TIME 5000
+#define DEBUG
 
-#define INC_DELAY 500
+#define MILLIS_PER_SECOND 1000
+
+#define SLOW_INC_DELAY 500
+#define FAST_INC_DELAY 150
+#define SLOW_TO_FAST_INC_TIME SLOW_INC_DELAY*10 - SLOW_INC_DELAY/2
 
 #define B_TIME_INC    6
 #define B_TIME_DEC    7
@@ -190,6 +193,8 @@ enum States{
     CLOCK,
     ALARM_TRIGGERED,
     SNOOZEING,
+    SLOW_CHANGE,
+    FAST_CHANGE,
     TIME_CHANGE
 };
 
@@ -271,6 +276,7 @@ void setup()
     /*Print debug messages over serial if #define DEBUG is present*/
     #ifdef DEBUG
         Serial.begin(9600);
+        Serial.println("Starting with debugging prints enabled");
     #endif
     /* Initialize LCD */
     lcd.begin(16, 2);
@@ -351,7 +357,7 @@ void loop()
                 time_inc_sign = -1;
             }
 
-            CurrentState = TIME_CHANGE;
+            CurrentState = SLOW_CHANGE;
         }
 
         else if(UI::check_for_press(B_ALARM_SET)){
@@ -364,43 +370,6 @@ void loop()
 
         //TODO: Add Backlight input check and check for alarm being triggered (probably only need to check in CLOCK)
         break;
-
-    /**
-     * @brief State used to set times for both the alarm and clock time
-     *
-     * @details Exits when the Time inc or time dec buttons are released (so ensure they have been pressed before entering)
-     */
-    case TIME_CHANGE:
-        if (millis()-LastIncTime >= INC_DELAY)
-        {
-            LastIncTime = millis();
-            if ((millis()-StateChangeTime) < SLOW_TO_FAST_INC_TIME)
-            {
-                TimeSetTime->increment(time_inc_sign*60);
-            }
-            else
-            {
-                TimeSetTime->increment(time_inc_sign*600);
-            }
-            displayTime((void*)TimeSetTime, SettingAlarmTime);
-        }
-
-        if (UI::check_for_release(B_TIME_DEC) || UI::check_for_release(B_TIME_INC))
-        {
-            ClockRunning = true;
-            UI::clear_flags();
-            if(SettingAlarmTime)
-            {
-                CurrentState = ALARM_TIME_SET;
-            }
-            else
-            {
-                CurrentState = CLOCK;
-            }
-        }
-
-        break;
-
 
     /**
      * @brief Used to set the time of the alarm
@@ -429,7 +398,7 @@ void loop()
                 time_inc_sign = -1;
             }
 
-            CurrentState = TIME_CHANGE;
+            CurrentState = SLOW_CHANGE;
         }
 
         if (UI::check_for_press(B_ALARM_SET))
@@ -448,7 +417,7 @@ void loop()
      * @details Will toggle alarm status on pressing T+ or T- buttons. Exits to CLOCK on pressing Alarm set again.
      */
     case ALARM_SET:
-        if (UI::check_for_press(B_TIME_DEC) || UI::check_for_press(B_TIME_DEC))
+        if (UI::check_for_press(B_TIME_DEC) || UI::check_for_press(B_TIME_INC))
         {
             AlarmActive = !AlarmActive;
             lcd.setCursor(0, 1);
@@ -479,6 +448,51 @@ void loop()
 
         }
 
+        break;
+
+    case SLOW_CHANGE:
+        if (UI::check_for_release(B_TIME_DEC) || UI::check_for_release(B_TIME_INC))
+        {
+            ClockRunning = true;
+            UI::clear_flags();
+            if(SettingAlarmTime)
+            {
+                CurrentState = ALARM_TIME_SET;
+            }
+            else
+            {
+                CurrentState = CLOCK;
+            }
+        }
+        else
+        {
+            if ((millis()-StateChangeTime) >= SLOW_TO_FAST_INC_TIME && TimeSetTime->minutes%10 == 0)
+            {
+                CurrentState = FAST_CHANGE;
+                #ifdef DEBUG
+                    Serial.println(millis()-StateChangeTime);
+                #endif
+            }
+            else if (millis()-LastIncTime >= SLOW_INC_DELAY)
+            {
+                LastIncTime = millis();
+                TimeSetTime->increment(time_inc_sign*60);
+                displayTime((void*)TimeSetTime, SettingAlarmTime);
+            }
+        }
+        break;
+
+    case FAST_CHANGE:
+        if (millis()-LastIncTime >= FAST_INC_DELAY)
+        {
+            LastIncTime = millis();
+            TimeSetTime->increment(time_inc_sign*600);
+            displayTime((void*)TimeSetTime, SettingAlarmTime);
+        }
+        if (UI::check_for_release(B_TIME_DEC, false) || UI::check_for_release(B_TIME_INC, false))
+        {
+            CurrentState = SLOW_CHANGE;
+        }
         break;
 
     default:
