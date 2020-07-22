@@ -9,7 +9,11 @@
 
 #include <LiquidCrystal.h>
 
-#define DEBUG
+/**
+ * @brief Used for enabling debug printing, breaks simulator
+ *
+ */
+// #define DEBUG
 
 #define MILLIS_PER_SECOND 1000
 
@@ -450,6 +454,10 @@ void loop()
 
         break;
 
+    /**
+     * @brief Used for incrementing the current time or alarm time by 1 minute
+     *
+     */
     case SLOW_CHANGE:
         if (UI::check_for_release(B_TIME_DEC) || UI::check_for_release(B_TIME_INC))
         {
@@ -482,6 +490,10 @@ void loop()
         }
         break;
 
+    /**
+     * @brief Used to change the alarm or current time by 10 minutes
+     *
+     */
     case FAST_CHANGE:
         if (millis()-LastIncTime >= FAST_INC_DELAY)
         {
