@@ -62,7 +62,7 @@ U 1 1 5F063F5F
 P 8400 4000
 F 0 "DS1" H 8700 5000 50  0000 C CNN
 F 1 "WC1602A" H 8800 4850 50  0000 C CNN
-F 2 "Display:WC1602A" H 8400 3100 50  0001 C CIN
+F 2 "ECE:WC1602A" H 8400 3100 50  0001 C CIN
 F 3 "http://www.wincomlcd.com/pdf/WC1602A-SFYLYHTC06.pdf" H 9100 4000 50  0001 C CNN
 	1    8400 4000
 	1    0    0    -1  
@@ -192,7 +192,7 @@ U 1 1 5F088DBE
 P 2950 3750
 F 0 "PB6" V 3100 3900 50  0000 C CNN
 F 1 "Time+" H 2800 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 2950 3950 50  0001 C CNN
+F 2 "ECE:SW_TH_Tactile" H 2950 3950 50  0001 C CNN
 F 3 "~" H 2950 3950 50  0001 C CNN
 	1    2950 3750
 	0    -1   1    0   
@@ -203,7 +203,7 @@ U 1 1 5F08BB18
 P 2550 3750
 F 0 "PB5" V 2700 3900 50  0000 C CNN
 F 1 "Time-" H 2400 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 2550 3950 50  0001 C CNN
+F 2 "ECE:SW_TH_Tactile" H 2550 3950 50  0001 C CNN
 F 3 "~" H 2550 3950 50  0001 C CNN
 	1    2550 3750
 	0    -1   1    0   
@@ -214,7 +214,7 @@ U 1 1 5F08C740
 P 1750 3750
 F 0 "PB3" V 1900 3900 50  0000 C CNN
 F 1 "CancelAlarm" H 1500 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:Push_E-Switch_KS01Q01" H 1750 3950 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1750 3950 50  0001 C CNN
 F 3 "~" H 1750 3950 50  0001 C CNN
 	1    1750 3750
 	0    -1   1    0   
@@ -225,7 +225,7 @@ U 1 1 5F08C9FC
 P 1350 3750
 F 0 "PB2" V 1500 3850 50  0000 C CNN
 F 1 "Snooze" H 1200 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:Push_E-Switch_KS01Q01" H 1350 3950 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1350 3950 50  0001 C CNN
 F 3 "~" H 1350 3950 50  0001 C CNN
 	1    1350 3750
 	0    -1   1    0   
@@ -236,7 +236,7 @@ U 1 1 5F08CE62
 P 1000 3750
 F 0 "PB1" V 1150 3850 50  0000 C CNN
 F 1 "Backlight" H 800 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 1000 3950 50  0001 C CNN
+F 2 "ECE:SW_TH_Tactile" H 1000 3950 50  0001 C CNN
 F 3 "~" H 1000 3950 50  0001 C CNN
 	1    1000 3750
 	0    -1   1    0   
@@ -287,7 +287,7 @@ U 1 1 5F0E8897
 P 9400 3400
 F 0 "RV1" V 9300 3450 50  0000 R CNN
 F 1 "Contrast" H 9350 3550 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_ACP_CA6-H2,5_Horizontal" H 9400 3400 50  0001 C CNN
+F 2 "digikey-footprints:Potentiometer_P120PK-Y25BR10K" H 9400 3400 50  0001 C CNN
 F 3 "~" H 9400 3400 50  0001 C CNN
 	1    9400 3400
 	-1   0    0    -1  
@@ -353,7 +353,7 @@ U 1 1 5F0F643D
 P 4050 3000
 F 0 "R1" V 4150 2950 50  0000 L CNN
 F 1 "PhotoResistor" V 4250 2800 50  0000 L CNN
-F 2 "OptoDevice:R_LDR_4.9x4.2mm_P2.54mm_Vertical" V 4100 2750 50  0001 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" V 4100 2750 50  0001 L CNN
 F 3 "~" H 4050 2950 50  0001 C CNN
 	1    4050 3000
 	-1   0    0    1   
@@ -406,7 +406,7 @@ U 1 1 5F08C341
 P 2150 3750
 F 0 "PB4" V 2300 3900 50  0000 C CNN
 F 1 "AlarmSet" H 1900 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 2150 3950 50  0001 C CNN
+F 2 "ECE:SW_TH_Tactile" H 2150 3950 50  0001 C CNN
 F 3 "~" H 2150 3950 50  0001 C CNN
 	1    2150 3750
 	0    -1   1    0   
@@ -536,4 +536,48 @@ NoConn ~ 8000 3900
 NoConn ~ 8000 4000
 NoConn ~ 8000 4100
 NoConn ~ 8000 4200
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 5F1AE9B8
+P 1350 1900
+F 0 "H1" H 1450 1946 50  0000 L CNN
+F 1 "MountingHole" H 1450 1855 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 1350 1900 50  0001 C CNN
+F 3 "~" H 1350 1900 50  0001 C CNN
+	1    1350 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 5F1AF35E
+P 1350 2100
+F 0 "H2" H 1450 2146 50  0000 L CNN
+F 1 "MountingHole" H 1450 2055 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 1350 2100 50  0001 C CNN
+F 3 "~" H 1350 2100 50  0001 C CNN
+	1    1350 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 5F1AF6BA
+P 1350 2300
+F 0 "H3" H 1450 2346 50  0000 L CNN
+F 1 "MountingHole" H 1450 2255 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 1350 2300 50  0001 C CNN
+F 3 "~" H 1350 2300 50  0001 C CNN
+	1    1350 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 5F1AF8CA
+P 1350 2500
+F 0 "H4" H 1450 2546 50  0000 L CNN
+F 1 "MountingHole" H 1450 2455 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 1350 2500 50  0001 C CNN
+F 3 "~" H 1350 2500 50  0001 C CNN
+	1    1350 2500
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
