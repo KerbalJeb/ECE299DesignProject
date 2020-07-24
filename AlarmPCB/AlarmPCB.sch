@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:AlarmPCB-cache
 EELAYER 30 0
 EELAYER END
 $Descr USLetter 11000 8500
@@ -214,7 +213,7 @@ U 1 1 5F08C740
 P 1750 3750
 F 0 "PB3" V 1900 3900 50  0000 C CNN
 F 1 "CancelAlarm" H 1500 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:Push_E-Switch_KS01Q01" H 1750 3950 50  0001 C CNN
+F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 1750 3950 50  0001 C CNN
 F 3 "~" H 1750 3950 50  0001 C CNN
 	1    1750 3750
 	0    -1   1    0   
@@ -225,7 +224,7 @@ U 1 1 5F08C9FC
 P 1350 3750
 F 0 "PB2" V 1500 3850 50  0000 C CNN
 F 1 "Snooze" H 1200 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:Push_E-Switch_KS01Q01" H 1350 3950 50  0001 C CNN
+F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 1350 3950 50  0001 C CNN
 F 3 "~" H 1350 3950 50  0001 C CNN
 	1    1350 3750
 	0    -1   1    0   
@@ -236,7 +235,7 @@ U 1 1 5F08CE62
 P 1000 3750
 F 0 "PB1" V 1150 3850 50  0000 C CNN
 F 1 "Backlight" H 800 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 1000 3950 50  0001 C CNN
+F 2 "Button_Switch_THT:SW_PUSH-12mm_Wuerth-430476085716" H 1000 3950 50  0001 C CNN
 F 3 "~" H 1000 3950 50  0001 C CNN
 	1    1000 3750
 	0    -1   1    0   
@@ -536,4 +535,48 @@ NoConn ~ 8000 3900
 NoConn ~ 8000 4000
 NoConn ~ 8000 4100
 NoConn ~ 8000 4200
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 5F1B765B
+P 6400 5750
+F 0 "H1" H 6500 5796 50  0000 L CNN
+F 1 "MountingHole" H 6500 5705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 6400 5750 50  0001 C CNN
+F 3 "~" H 6400 5750 50  0001 C CNN
+	1    6400 5750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 5F1B83F1
+P 7150 5750
+F 0 "H2" H 7250 5796 50  0000 L CNN
+F 1 "MountingHole" H 7250 5705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 7150 5750 50  0001 C CNN
+F 3 "~" H 7150 5750 50  0001 C CNN
+	1    7150 5750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 5F1BA130
+P 7900 5750
+F 0 "H3" H 8000 5796 50  0000 L CNN
+F 1 "MountingHole" H 8000 5705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 7900 5750 50  0001 C CNN
+F 3 "~" H 7900 5750 50  0001 C CNN
+	1    7900 5750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 5F1BA136
+P 8650 5750
+F 0 "H4" H 8750 5796 50  0000 L CNN
+F 1 "MountingHole" H 8750 5705 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 8650 5750 50  0001 C CNN
+F 3 "~" H 8650 5750 50  0001 C CNN
+	1    8650 5750
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
