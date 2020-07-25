@@ -213,7 +213,7 @@ U 1 1 5F08C740
 P 1750 3750
 F 0 "PB3" V 1900 3900 50  0000 C CNN
 F 1 "CancelAlarm" H 1500 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 1750 3950 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1750 3950 50  0001 C CNN
 F 3 "~" H 1750 3950 50  0001 C CNN
 	1    1750 3750
 	0    -1   1    0   
@@ -224,7 +224,7 @@ U 1 1 5F08C9FC
 P 1350 3750
 F 0 "PB2" V 1500 3850 50  0000 C CNN
 F 1 "Snooze" H 1200 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 1350 3950 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1350 3950 50  0001 C CNN
 F 3 "~" H 1350 3950 50  0001 C CNN
 	1    1350 3750
 	0    -1   1    0   
@@ -235,7 +235,7 @@ U 1 1 5F08CE62
 P 1000 3750
 F 0 "PB1" V 1150 3850 50  0000 C CNN
 F 1 "Backlight" H 800 3850 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_PUSH-12mm_Wuerth-430476085716" H 1000 3950 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 1000 3950 50  0001 C CNN
 F 3 "~" H 1000 3950 50  0001 C CNN
 	1    1000 3750
 	0    -1   1    0   
@@ -352,7 +352,7 @@ U 1 1 5F0F643D
 P 4050 3000
 F 0 "R1" V 4150 2950 50  0000 L CNN
 F 1 "PhotoResistor" V 4250 2800 50  0000 L CNN
-F 2 "OptoDevice:R_LDR_4.9x4.2mm_P2.54mm_Vertical" V 4100 2750 50  0001 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" V 4100 2750 50  0001 L CNN
 F 3 "~" H 4050 2950 50  0001 C CNN
 	1    4050 3000
 	-1   0    0    1   
