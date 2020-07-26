@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:AlarmPCB-cache
 EELAYER 30 0
 EELAYER END
 $Descr USLetter 11000 8500
@@ -286,7 +287,7 @@ U 1 1 5F0E8897
 P 9400 3400
 F 0 "RV1" V 9300 3450 50  0000 R CNN
 F 1 "Contrast" H 9350 3550 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_ACP_CA6-H2,5_Horizontal" H 9400 3400 50  0001 C CNN
+F 2 "digikey-footprints:Potentiometer_P120PK-Y25BR10K" H 9400 3400 50  0001 C CNN
 F 3 "~" H 9400 3400 50  0001 C CNN
 	1    9400 3400
 	-1   0    0    -1  
@@ -541,7 +542,7 @@ U 1 1 5F1B765B
 P 6400 5750
 F 0 "H1" H 6500 5796 50  0000 L CNN
 F 1 "MountingHole" H 6500 5705 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 6400 5750 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 6400 5750 50  0001 C CNN
 F 3 "~" H 6400 5750 50  0001 C CNN
 	1    6400 5750
 	1    0    0    -1  
@@ -552,7 +553,7 @@ U 1 1 5F1B83F1
 P 7150 5750
 F 0 "H2" H 7250 5796 50  0000 L CNN
 F 1 "MountingHole" H 7250 5705 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 7150 5750 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 7150 5750 50  0001 C CNN
 F 3 "~" H 7150 5750 50  0001 C CNN
 	1    7150 5750
 	1    0    0    -1  
@@ -563,7 +564,7 @@ U 1 1 5F1BA130
 P 7900 5750
 F 0 "H3" H 8000 5796 50  0000 L CNN
 F 1 "MountingHole" H 8000 5705 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 7900 5750 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 7900 5750 50  0001 C CNN
 F 3 "~" H 7900 5750 50  0001 C CNN
 	1    7900 5750
 	1    0    0    -1  
@@ -574,7 +575,7 @@ U 1 1 5F1BA136
 P 8650 5750
 F 0 "H4" H 8750 5796 50  0000 L CNN
 F 1 "MountingHole" H 8750 5705 50  0000 L CNN
-F 2 "MountingHole:MountingHole_3.2mm_M3" H 8650 5750 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 8650 5750 50  0001 C CNN
 F 3 "~" H 8650 5750 50  0001 C CNN
 	1    8650 5750
 	1    0    0    -1  
