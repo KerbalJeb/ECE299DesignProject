@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:AlarmPCB-cache
 EELAYER 30 0
 EELAYER END
 $Descr USLetter 11000 8500
@@ -286,7 +287,7 @@ U 1 1 5F0E8897
 P 9400 3400
 F 0 "RV1" V 9300 3450 50  0000 R CNN
 F 1 "Contrast" H 9350 3550 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_ACP_CA6-H2,5_Horizontal" H 9400 3400 50  0001 C CNN
+F 2 "digikey-footprints:Potentiometer_P120PK-Y25BR10K" H 9400 3400 50  0001 C CNN
 F 3 "~" H 9400 3400 50  0001 C CNN
 	1    9400 3400
 	-1   0    0    -1  
