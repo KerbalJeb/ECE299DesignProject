@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:AlarmPCB-cache
 EELAYER 30 0
 EELAYER END
 $Descr USLetter 11000 8500
@@ -236,7 +235,7 @@ U 1 1 5F08CE62
 P 1000 3750
 F 0 "PB1" V 1150 3850 50  0000 C CNN
 F 1 "Backlight" H 800 3850 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 1000 3950 50  0001 C CNN
+F 2 "Button_Switch_THT:SW_TH_Tactile_Omron_B3F-10xx" H 1000 3950 50  0001 C CNN
 F 3 "~" H 1000 3950 50  0001 C CNN
 	1    1000 3750
 	0    -1   1    0   
