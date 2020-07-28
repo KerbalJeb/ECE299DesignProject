@@ -21,7 +21,7 @@
 #define FAST_INC_DELAY 150
 #define SLOW_TO_FAST_INC_TIME SLOW_INC_DELAY*10 - SLOW_INC_DELAY/2
 
-#define SNOOZE_TIME 60
+#define BRIGHTNESS_PER_PERCENT 8
 
 #define B_TIME_INC    6
 #define B_TIME_DEC    7
@@ -213,7 +213,7 @@ States CurrentState = TIME_UNSET;
 
 BacklightMode_t BacklightMode = AUTO;
 
-unsigned int BacklightThreshold = 400;
+unsigned int BacklightThreshold = 80;
 
 /**
  * @brief Used by some states to measrue elapsed time inside state
@@ -287,10 +287,10 @@ void setup()
 
     /* Initialize all used pins */
     pinMode(BACKLIGHT_PIN, OUTPUT);
-    pinMode(LIGHT_SENSE  , OUTPUT);
+    pinMode(LIGHT_SENSE  , INPUT);
     pinMode(BUZZER       , OUTPUT);
 
-    setBacklight(0);
+    digitalWrite(BACKLIGHT_PIN, LOW);
     lcd.setCursor(0, 0);
     lcd.print("  Time Not Set  ");
     lcd.setCursor(0, 1);
@@ -524,7 +524,7 @@ void loop()
 
     if (BacklightMode == AUTO)
     {
-        if (analogRead(LIGHT_SENSE) < BacklightThreshold)
+        if (analogRead(LIGHT_SENSE)/BRIGHTNESS_PER_PERCENT < BacklightThreshold)
         {
             digitalWrite(BACKLIGHT_PIN, HIGH);
         }
