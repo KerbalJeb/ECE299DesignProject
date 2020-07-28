@@ -21,6 +21,8 @@
 #define FAST_INC_DELAY 150
 #define SLOW_TO_FAST_INC_TIME SLOW_INC_DELAY*10 - SLOW_INC_DELAY/2
 
+#define SNOOZE_TIME 60
+
 #define B_TIME_INC    6
 #define B_TIME_DEC    7
 #define B_SNOOZE      A2
@@ -179,11 +181,10 @@ bool AlarmActive = false;
  * @brief Stores values used for digitalWrite when setting backlight brightness
  *
  */
-enum BacklightBrightness{
+enum BacklightMode_t{
     OFF = 0,
-    MIN = 50,
-    MED = 127,
-    MAX = 255
+    ON,
+    AUTO
 };
 
 /**
@@ -199,7 +200,9 @@ enum States{
     SNOOZEING,
     SLOW_CHANGE,
     FAST_CHANGE,
-    TIME_CHANGE
+    TIME_CHANGE,
+    BACKLIGHT_MODE,
+    BACKLIGHT_THRES_ADJ
 };
 
 /**
@@ -207,6 +210,10 @@ enum States{
  *
  */
 States CurrentState = TIME_UNSET;
+
+BacklightMode_t BacklightMode = AUTO;
+
+unsigned int BacklightThreshold = 400;
 
 /**
  * @brief Used by some states to measrue elapsed time inside state
@@ -250,13 +257,6 @@ void updateTime();
 void displayTime(void* time, bool alarm_time=false);
 
 /**
- * @brief Set the brightness of the backlight (via PWM)
- *
- * @param state The brightness of the backlight from the BacklightBrightness enum
- */
-void setBacklight(BacklightBrightness state);
-
-/**
  * @brief The Current clock time
  *
  */
@@ -290,7 +290,7 @@ void setup()
     pinMode(LIGHT_SENSE  , OUTPUT);
     pinMode(BUZZER       , OUTPUT);
 
-    setBacklight(MED);
+    setBacklight(0);
     lcd.setCursor(0, 0);
     lcd.print("  Time Not Set  ");
     lcd.setCursor(0, 1);
@@ -522,6 +522,18 @@ void loop()
         updateTime();
     }
 
+    if (BacklightMode == AUTO)
+    {
+        if (analogRead(LIGHT_SENSE) < BacklightThreshold)
+        {
+            digitalWrite(BACKLIGHT_PIN, HIGH);
+        }
+        else
+        {
+            digitalWrite(BACKLIGHT_PIN, LOW);
+        }
+    }
+
     UI::poll_buttons();
 }
 
@@ -554,11 +566,6 @@ void displayTime(void* time_vp, bool alarm_time)
         sprintf(timeString, "    %02d:%02d:%02d    ", time->hours, time->minutes, time->seconds);
     }
     lcd.print(timeString);
-}
-
-void setBacklight(BacklightBrightness state)
-{
-    analogWrite(BACKLIGHT_PIN, state);
 }
 
 void UI::add_button(unsigned int pin_id)
@@ -608,9 +615,9 @@ bool UI::check_for_press(unsigned int pin_id, bool clear)
         if (button->pin_id == pin_id)
         {
             bool value = button->been_pressed;
-            if (clear)
+            if (clear && value)
             {
-                button->been_pressed = false;
+                clear_flags();
             }
 
             return value;
@@ -618,9 +625,6 @@ bool UI::check_for_press(unsigned int pin_id, bool clear)
 
         button = button->next;
     }
-    #ifdef DEBUG
-        Serial.println("pin not found");
-    #endif
 }
 
 bool UI::check_for_release(unsigned int pin_id, bool clear)
@@ -631,9 +635,9 @@ bool UI::check_for_release(unsigned int pin_id, bool clear)
         if (button->pin_id == pin_id)
         {
             bool value = button->been_released;
-            if (clear)
+            if (clear && value)
             {
-                button->been_released = false;
+                clear_flags();
             }
 
             return value;
