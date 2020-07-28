@@ -590,6 +590,9 @@ void loop()
             CurrentState = CLOCK;
             noTone(BUZZER);
             UI::clear_flags();
+            lcd.setCursor(0, 1);
+            lcd.print("Alarm At:  ");
+            displayTime((void*)&AlarmTime, true);
         }
 
         break;
@@ -599,6 +602,8 @@ void loop()
         {
             CurrentState = ALARM_TRIGGERED;
             tone(BUZZER, 1000);
+            lcd.setCursor(0, 1);
+            lcd.print("Alarm At:  ");
             displayTime((void*)&AlarmTime, true);
         }
         else if (UI::check_for_press(B_CANCEL))
