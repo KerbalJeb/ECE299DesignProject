@@ -15,13 +15,14 @@
  */
 // #define DEBUG
 
-#define MILLIS_PER_SECOND 1000
+#define MILLIS_PER_SECOND 17
 
-#define SLOW_INC_DELAY 500
+#define SLOW_INC_DELAY 100
 #define FAST_INC_DELAY 150
 #define SLOW_TO_FAST_INC_TIME SLOW_INC_DELAY*10 - SLOW_INC_DELAY/2
 
 #define BRIGHTNESS_PER_PERCENT 8
+#define SNOOZE_TIME 5*60
 
 #define B_TIME_INC    6
 #define B_TIME_DEC    7
@@ -241,12 +242,14 @@ bool SettingAlarmTime = false;
 
 bool ShowTime = true;
 
+bool AlarmTriggered = false;
+
 /**
  * @brief Used to update the current time (based on millis() so it will not be very accurate,
  * could dedicate a timer to this task if desired)
  *
  */
-void updateTime(bool dispaly);
+void updateTime();
 
 /**
  * @brief Used to dispaly a time on the LCD
@@ -341,6 +344,7 @@ void loop()
      * @details Exits to appropriate state when any UI button is pressed
      */
     case CLOCK:
+        noTone(BUZZER);
         t_inc = UI::check_for_press(B_TIME_INC);
         t_dec = UI::check_for_press(B_TIME_DEC);
 
@@ -366,11 +370,23 @@ void loop()
             CurrentState = SLOW_CHANGE;
         }
 
+        else if (CurrentTime.minutes == AlarmTime.minutes && CurrentTime.hours == AlarmTime.hours && AlarmActive)
+        {
+            if (!AlarmTriggered)
+            {
+                CurrentState = ALARM_TRIGGERED;
+                AlarmTriggered = true;
+                tone(BUZZER, 1000);
+                UI::clear_flags();
+            }
+        }
+
         else if(UI::check_for_press(B_ALARM_SET)){
             UI::clear_flags();
             TimeSetTime  = &AlarmTime;
             CurrentState = ALARM_TIME_SET;
             lcd.setCursor(0, 1);
+            lcd.print("Alarm Set: ");
             displayTime((void*)&AlarmTime, true);
         }
 
@@ -381,6 +397,12 @@ void loop()
             diplay_backlight_mode();
             ShowTime = false;
         }
+
+        else
+        {
+            AlarmTriggered = false;
+        }
+
 
         //TODO: Add Backlight input check and check for alarm being triggered (probably only need to check in CLOCK)
         break;
@@ -452,6 +474,8 @@ void loop()
             UI::clear_flags();
             if (AlarmActive)
             {
+                lcd.setCursor(0, 1);
+                lcd.print("Alarm At:  ");
                 displayTime((void*) TimeSetTime, true);
             }
             else
@@ -548,8 +572,43 @@ void loop()
             displayTime((void*)&AlarmTime, true);
             ShowTime=true;
         }
+        break;
 
+    case ALARM_TRIGGERED:
+        if (UI::check_for_press(B_SNOOZE))
+        {
+            CurrentState = SNOOZEING;
+            StateChangeTime = millis();
+            noTone(BUZZER);
+            lcd.clear();
+            displayTime((void*)&CurrentTime);
+            lcd.setCursor(0, 1);
+            lcd.print("    Snoozing    ");
+        }
+        else if (UI::check_for_press(B_CANCEL))
+        {
+            CurrentState = CLOCK;
+            noTone(BUZZER);
+            UI::clear_flags();
+        }
 
+        break;
+
+    case SNOOZEING:
+        if (millis()-StateChangeTime > SNOOZE_TIME*MILLIS_PER_SECOND)
+        {
+            CurrentState = ALARM_TRIGGERED;
+            tone(BUZZER, 1000);
+            displayTime((void*)&AlarmTime, true);
+        }
+        else if (UI::check_for_press(B_CANCEL))
+        {
+            CurrentState = CLOCK;
+            UI::clear_flags();
+            lcd.setCursor(0, 1);
+            lcd.print("Alarm At:  ");
+            displayTime((void*)&AlarmTime, true);
+        }
         break;
 
     default:
@@ -560,10 +619,6 @@ void loop()
     }
 
     /*Update Logic*/
-    if (ClockRunning)
-    {
-        updateTime(ShowTime);
-    }
 
     switch (BacklightMode)
     {
@@ -590,6 +645,7 @@ void loop()
     }
 
     UI::poll_buttons();
+    updateTime();
 }
 
 void diplay_backlight_mode()
@@ -614,21 +670,28 @@ void diplay_backlight_mode()
 
 }
 
-void updateTime(bool dispaly)
+void updateTime()
 {
     /* Must be called every loop */
     static unsigned long last_update = 0;
 
-    unsigned int delta_time = millis()-last_update;
-    if (delta_time >= MILLIS_PER_SECOND)
+    if (!ClockRunning)
     {
-        CurrentTime.increment(delta_time/MILLIS_PER_SECOND);
-        if (ShowTime)
-        {
-            displayTime((void*)&CurrentTime);
-        }
-
         last_update = millis();
+    }
+    else
+    {
+        unsigned int delta_time = millis()-last_update;
+        if (delta_time >= MILLIS_PER_SECOND)
+        {
+            CurrentTime.increment(delta_time/MILLIS_PER_SECOND);
+            if (ShowTime)
+            {
+                displayTime((void*)&CurrentTime);
+            }
+
+            last_update = millis();
+        }
     }
 }
 
@@ -654,8 +717,8 @@ void displayTime(void* time_vp, bool alarm_time){
 
     if(alarm_time)
     {
-        lcd.setCursor(0, 1);
-        timeString = String("Alarm At: ") + hour_string + String(":") + minute_string;
+        lcd.setCursor(11, 1);
+        timeString = hour_string + String(":") + minute_string;
     }
     else
     {
