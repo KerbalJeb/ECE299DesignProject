@@ -239,12 +239,14 @@ char time_inc_sign;
  */
 bool SettingAlarmTime = false;
 
+bool ShowTime = true;
+
 /**
  * @brief Used to update the current time (based on millis() so it will not be very accurate,
  * could dedicate a timer to this task if desired)
  *
  */
-void updateTime();
+void updateTime(bool dispaly);
 
 /**
  * @brief Used to dispaly a time on the LCD
@@ -370,6 +372,14 @@ void loop()
             CurrentState = ALARM_TIME_SET;
             lcd.setCursor(0, 1);
             displayTime((void*)&AlarmTime, true);
+        }
+
+        else if (UI::check_for_press(B_BACKLIGHT))
+        {
+            CurrentState = BACKLIGHT_MODE;
+            lcd.clear();
+            diplay_backlight_mode();
+            ShowTime = false;
         }
 
         //TODO: Add Backlight input check and check for alarm being triggered (probably only need to check in CLOCK)
@@ -507,6 +517,41 @@ void loop()
         }
         break;
 
+    case BACKLIGHT_MODE:
+        t_inc = UI::check_for_press(B_TIME_INC);
+        t_dec = UI::check_for_press(B_TIME_DEC);
+        if (t_inc || t_dec)
+        {
+            if (t_inc)
+            {
+                BacklightMode = (BacklightMode_t)((unsigned int)BacklightMode + 1);
+                if ((unsigned int)BacklightMode > AUTO)
+                {
+                    BacklightMode = OFF;
+                }
+            }
+            else
+            {
+                BacklightMode = (BacklightMode_t)((unsigned int)BacklightMode - 1);
+                if ((unsigned int)BacklightMode > AUTO)
+                {
+                    BacklightMode = AUTO;
+                }
+            }
+            diplay_backlight_mode();
+        }
+
+        if (UI::check_for_press(B_BACKLIGHT))
+        {
+            CurrentState = CLOCK;
+            displayTime((void*)&CurrentTime);
+            displayTime((void*)&AlarmTime, true);
+            ShowTime=true;
+        }
+
+
+        break;
+
     default:
         #ifdef DEBUG
             Serial.println("Error, undefined state reached");
@@ -514,16 +559,15 @@ void loop()
         break;
     }
 
-    // TODO: Add Brightness contorl state maching here
-
     /*Update Logic*/
     if (ClockRunning)
     {
-        updateTime();
+        updateTime(ShowTime);
     }
 
-    if (BacklightMode == AUTO)
+    switch (BacklightMode)
     {
+    case AUTO:
         if (analogRead(LIGHT_SENSE)/BRIGHTNESS_PER_PERCENT < BacklightThreshold)
         {
             digitalWrite(BACKLIGHT_PIN, HIGH);
@@ -532,12 +576,45 @@ void loop()
         {
             digitalWrite(BACKLIGHT_PIN, LOW);
         }
+        break;
+
+    case ON:
+        digitalWrite(BACKLIGHT_PIN, HIGH);
+        break;
+
+    case OFF:
+        digitalWrite(BACKLIGHT_PIN, LOW);
+        break;
+    default:
+        break;
     }
 
     UI::poll_buttons();
 }
 
-void updateTime()
+void diplay_backlight_mode()
+{
+    lcd.setCursor(0, 0);
+    switch (BacklightMode)
+    {
+    case ON:
+        lcd.print("  Backlight ON  ");
+        break;
+
+    case OFF:
+        lcd.print("  Backlight OFF ");
+        break;
+
+    case AUTO:
+        lcd.print("    Automatic   ");
+        break;
+    default:
+        break;
+    }
+
+}
+
+void updateTime(bool dispaly)
 {
     /* Must be called every loop */
     static unsigned long last_update = 0;
@@ -546,7 +623,11 @@ void updateTime()
     if (delta_time >= MILLIS_PER_SECOND)
     {
         CurrentTime.increment(delta_time/MILLIS_PER_SECOND);
-        displayTime((void*)&CurrentTime);
+        if (ShowTime)
+        {
+            displayTime((void*)&CurrentTime);
+        }
+
         last_update = millis();
     }
 }
@@ -632,9 +713,9 @@ bool UI::check_for_press(unsigned int pin_id, bool clear)
         if (button->pin_id == pin_id)
         {
             bool value = button->been_pressed;
-            if (clear && value)
+            if (clear)
             {
-                clear_flags();
+                button->been_pressed=false;
             }
 
             return value;
@@ -652,9 +733,9 @@ bool UI::check_for_release(unsigned int pin_id, bool clear)
         if (button->pin_id == pin_id)
         {
             bool value = button->been_released;
-            if (clear && value)
+            if (clear)
             {
-                clear_flags();
+                button->been_released = false;
             }
 
             return value;
