@@ -551,20 +551,37 @@ void updateTime()
     }
 }
 
-void displayTime(void* time_vp, bool alarm_time)
+void pad(String& str, int len, char c)
 {
+    while (str.length()<len)
+    {
+        str = String(c) + str;
+    }
+}
+
+void displayTime(void* time_vp, bool alarm_time){
     Time* time = (Time*)time_vp;
-    static char timeString[16];
+
+    String hour_string    = String(time->hours);
+    String minute_string  = String(time->minutes);
+    String second_string  = String(time->seconds);
+    String timeString;
+
+    pad(hour_string   , 2, '0');
+    pad(minute_string, 2, '0');
+    pad(second_string , 2, '0');
+
     if(alarm_time)
     {
         lcd.setCursor(0, 1);
-        sprintf(timeString, "Alarm At: %02d:%02d", time->hours, time->minutes);
+        timeString = String("Alarm At: ") + hour_string + String(":") + minute_string;
     }
     else
     {
         lcd.setCursor(0, 0);
-        sprintf(timeString, "    %02d:%02d:%02d    ", time->hours, time->minutes, time->seconds);
+        timeString = String("    ") + hour_string + String(":") + minute_string + String(":") + second_string + String("    ");
     }
+
     lcd.print(timeString);
 }
 
