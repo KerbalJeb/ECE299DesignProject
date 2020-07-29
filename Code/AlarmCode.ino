@@ -568,6 +568,8 @@ void loop()
         if (UI::check_for_press(B_BACKLIGHT))
         {
             CurrentState = CLOCK;
+            lcd.setCursor(0, 1);
+            lcd.print("Alarm At:  ");
             displayTime((void*)&CurrentTime);
             displayTime((void*)&AlarmTime, true);
             ShowTime=true;
