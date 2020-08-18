@@ -15,14 +15,13 @@
  */
 // #define DEBUG
 
-#define MILLIS_PER_SECOND 17
+#define MILLIS_PER_SECOND 1000
 
-#define SLOW_INC_DELAY 100
-#define FAST_INC_DELAY 150
-#define SLOW_TO_FAST_INC_TIME SLOW_INC_DELAY*10 - SLOW_INC_DELAY/2
+#define SLOW_INC_DELAY 200
+#define FAST_INC_DELAY 250
+#define SLOW_TO_FAST_INC_TIME SLOW_INC_DELAY - SLOW_INC_DELAY/2
 
-#define BRIGHTNESS_PER_PERCENT 8
-#define SNOOZE_TIME 5*60
+#define SNOOZE_TIME 2*60
 
 #define B_TIME_INC    6
 #define B_TIME_DEC    7
@@ -35,14 +34,15 @@
 #define LIGHT_SENSE   A0
 #define BUZZER        9
 
-/* Tinkercad doesn't support nullptr (but latest arduino ide does), hacky way to allow it to run on tinkercad*/
+/* Tinkercad doesn't support nullptr (but latest arduino ide does), hacky way to
+allow it to run on tinkercad*/
 #define nullptr NULL
 #define ALARM_ENABLED_MSG  "Alarm Enabled   "
 #define ALARM_DISABLED_MSG "Alarm Disabled  "
 
 /**
- * @brief A struct to hold the current state of a button (used to form a linked list of all
- * buttons used in the UI)
+ * @brief A struct to hold the current state of a button (used to form a linked
+ * list of all buttons used in the UI)
  *
  */
 struct Button
@@ -57,11 +57,13 @@ struct Button
 };
 
 /**
- * @brief A static only class used to mange regestering and de-bouncing button presses
+ * @brief A static only class used to mange regestering and de-bouncing button
+ * presses
  *
- * @details Registers Press and Release events, one press event occurs when a button is initally pressed
- * and one release event occurs when it is released. These events can be accessed by the check_for_press and
- * check_for_release fuctions. Checking an event will clear it by default.
+ * @details Registers Press and Release events, one press event occurs when a
+ * button is initally pressed and one release event occurs when it is released.
+ * These events can be accessed by the check_for_press and check_for_release
+ * fuctions. Checking an event will clear it by default.
  */
 class UI
 {
@@ -76,7 +78,8 @@ public:
     /**
      * @brief Adds a button to the UI
      *
-     * @param pin_id The pin that the button is connected to (0, 2, 13, A0, ect.)
+     * @param pin_id The pin that the button is connected to (0, 2, 13, A0,
+     * ect.)
      */
     void static add_button(unsigned int pin_id);
 
@@ -87,11 +90,13 @@ public:
     void static poll_buttons();
 
     /**
-     * @brief Will reset the pressed/released states for all buttons (set to false)
+     * @brief Will reset the pressed/released states for all buttons (set to
+     * false)
      *
-     * @details Should be used if an button is not being used in a state, since if it is pressed in that state
-     * the press/release flags will still be set. This could cause unexpected behaviour when entering a new state.
-     * i.e. button press from a long time ago could suddenly register.
+     * @details Should be used if an button is not being used in a state, since
+     * if it is pressed in that state the press/release flags will still be set.
+     * This could cause unexpected behaviour when entering a new state. i.e.
+     * button press from a long time ago could suddenly register.
      */
     void static clear_flags();
 
@@ -99,7 +104,8 @@ public:
      * @brief Checks if the button associated with pin_id has been pressed
      *
      * @param pin_id The pin number the button is connected to
-     * @param clear Clear on read (true by default), will not reset the state on calling the function if set to false.
+     * @param clear Clear on read (true by default), will not reset the state on
+     * calling the function if set to false.
      * @return true The button has been pressed (since last call)
      * @return false The button has not been pressed (since last call)
      */
@@ -109,7 +115,8 @@ public:
      * @brief Checks if the button associated with pin_id has been released
      *
      * @param pin_id The pin number the button is connected to
-     * @param clear clear Clear on read (true by default), will not reset the state on calling the function if set to false.
+     * @param clear clear Clear on read (true by default), will not reset the
+     * state on calling the function if set to false.
      * @return true The button has been released (since last call)
      * @return false The button has not been released (since last call)
      */
@@ -189,7 +196,8 @@ enum BacklightMode_t{
 };
 
 /**
- * @brief The internal States used for the alarm, see the main loop form more details
+ * @brief The internal States used for the alarm, see the main loop form more
+ * details
  *
  */
 enum States{
@@ -214,7 +222,7 @@ States CurrentState = TIME_UNSET;
 
 BacklightMode_t BacklightMode = AUTO;
 
-unsigned int BacklightThreshold = 80;
+unsigned int BacklightThreshold = 512;
 
 /**
  * @brief Used by some states to measrue elapsed time inside state
@@ -223,19 +231,22 @@ unsigned int BacklightThreshold = 80;
 unsigned long StateChangeTime;
 
 /**
- * @brief Used by the TIME_CHANGE state to increment the current time periodically (press and hold)
+ * @brief Used by the TIME_CHANGE state to increment the current time
+ * periodically (press and hold)
  *
  */
 unsigned long LastIncTime;
 
 /**
- * @brief Used to store the sign for TIME_CHANGE logic (incrementing or decrementing current time)
+ * @brief Used to store the sign for TIME_CHANGE logic (incrementing or
+ * decrementing current time)
  *
  */
 char time_inc_sign;
 
 /**
- * @brief Used so TIME_CHANGE can know if it is setting an alarm time or the clock time
+ * @brief Used so TIME_CHANGE can know if it is setting an alarm time or the
+ * clock time
  *
  */
 bool SettingAlarmTime = false;
@@ -245,8 +256,8 @@ bool ShowTime = true;
 bool AlarmTriggered = false;
 
 /**
- * @brief Used to update the current time (based on millis() so it will not be very accurate,
- * could dedicate a timer to this task if desired)
+ * @brief Used to update the current time (based on millis() so it will not be
+ * very accurate, could dedicate a timer to this task if desired)
  *
  */
 void updateTime();
@@ -254,10 +265,12 @@ void updateTime();
 /**
  * @brief Used to dispaly a time on the LCD
  *
- * @param time A pointer to a Time struct (must be cast to a void*,
- * since tinkercad doesn't seem to allow function parameters that are structs or classes....)
- * @param alarm_time If this is the alarm time or current time (alarm time will be displayed on second row with text to
- * indicate that an alarm is set for this time)
+ * @param time A pointer to a Time struct (must be cast to a void*, since
+ * tinkercad doesn't seem to allow function parameters that are structs or
+ * classes....)
+ * @param alarm_time If this is the alarm time or current time (alarm time will
+ * be displayed on second row with text to indicate that an alarm is set for
+ * this time)
  */
 void displayTime(void* time, bool alarm_time=false);
 
@@ -274,8 +287,8 @@ Time CurrentTime;
 Time AlarmTime;
 
 /**
- * @brief A pointer passed to the TIME_CHANGE state to simplify the logic of setting both the alarm
- * and clock time
+ * @brief A pointer passed to the TIME_CHANGE state to simplify the logic of
+ * setting both the alarm and clock time
  *
  */
 Time* TimeSetTime;
@@ -322,11 +335,13 @@ void loop()
         /**
          * @brief The state the alarm enters after a reset
          *
-         * @details Exits state to CLOCK when the TIME_INC or TIME_DEC buttons are pressed, never reenters
+         * @details Exits state to CLOCK when the TIME_INC or TIME_DEC buttons
+         * are pressed, never reenters
          */
     case TIME_UNSET:
 
-        if (UI::check_for_press(B_TIME_INC, false) || UI::check_for_press(B_TIME_DEC, false))
+        if (UI::check_for_press(B_TIME_INC, false) ||
+            UI::check_for_press(B_TIME_DEC, false))
         {
             TimeSetTime  = &CurrentTime;
             CurrentState = CLOCK;
@@ -370,13 +385,14 @@ void loop()
             CurrentState = SLOW_CHANGE;
         }
 
-        else if (CurrentTime.minutes == AlarmTime.minutes && CurrentTime.hours == AlarmTime.hours && AlarmActive)
+        else if (CurrentTime.minutes == AlarmTime.minutes &&
+            CurrentTime.hours == AlarmTime.hours && AlarmActive)
         {
             if (!AlarmTriggered)
             {
                 CurrentState = ALARM_TRIGGERED;
                 AlarmTriggered = true;
-                tone(BUZZER, 1000);
+                tone(BUZZER, 3000);
                 UI::clear_flags();
             }
         }
@@ -404,14 +420,16 @@ void loop()
         }
 
 
-        //TODO: Add Backlight input check and check for alarm being triggered (probably only need to check in CLOCK)
+        //TODO: Add Backlight input check and check for alarm being triggered
+        //(probably only need to check in CLOCK)
         break;
 
     /**
      * @brief Used to set the time of the alarm
      *
-     * @details Will go into TIME_CHANGE if the T+ or T- buttons are pressed. Pressing the Alarm set button again
-     * will exit to the ALARM_SET state. No other buttons have any effect.
+     * @details Will go into TIME_CHANGE if the T+ or T- buttons are pressed.
+     * Pressing the Alarm set button again will exit to the ALARM_SET state. No
+     * other buttons have any effect.
      */
     case ALARM_TIME_SET:
         t_inc = UI::check_for_press(B_TIME_INC);
@@ -450,7 +468,8 @@ void loop()
     /**
      * @brief Used to disable or enable the alarm
      *
-     * @details Will toggle alarm status on pressing T+ or T- buttons. Exits to CLOCK on pressing Alarm set again.
+     * @details Will toggle alarm status on pressing T+ or T- buttons. Exits to
+     * CLOCK on pressing Alarm set again.
      */
     case ALARM_SET:
         if (UI::check_for_press(B_TIME_DEC) || UI::check_for_press(B_TIME_INC))
@@ -493,7 +512,8 @@ void loop()
      *
      */
     case SLOW_CHANGE:
-        if (UI::check_for_release(B_TIME_DEC) || UI::check_for_release(B_TIME_INC))
+        if (UI::check_for_release(B_TIME_DEC) ||
+            UI::check_for_release(B_TIME_INC))
         {
             ClockRunning = true;
             UI::clear_flags();
@@ -508,7 +528,8 @@ void loop()
         }
         else
         {
-            if ((millis()-StateChangeTime) >= SLOW_TO_FAST_INC_TIME && TimeSetTime->minutes%10 == 0)
+            if ((millis()-StateChangeTime) >=
+                SLOW_TO_FAST_INC_TIME && TimeSetTime->minutes%10 == 0)
             {
                 CurrentState = FAST_CHANGE;
                 #ifdef DEBUG
@@ -535,12 +556,17 @@ void loop()
             TimeSetTime->increment(time_inc_sign*600);
             displayTime((void*)TimeSetTime, SettingAlarmTime);
         }
-        if (UI::check_for_release(B_TIME_DEC, false) || UI::check_for_release(B_TIME_INC, false))
+        if (UI::check_for_release(B_TIME_DEC, false) ||
+            UI::check_for_release(B_TIME_INC, false))
         {
             CurrentState = SLOW_CHANGE;
         }
         break;
 
+    /**
+     * @brief Used to change the backlight between on, off and auto modes
+     *
+     */
     case BACKLIGHT_MODE:
         t_inc = UI::check_for_press(B_TIME_INC);
         t_dec = UI::check_for_press(B_TIME_DEC);
@@ -548,7 +574,8 @@ void loop()
         {
             if (t_inc)
             {
-                BacklightMode = (BacklightMode_t)((unsigned int)BacklightMode + 1);
+                BacklightMode =
+                    (BacklightMode_t)((unsigned int)BacklightMode + 1);
                 if ((unsigned int)BacklightMode > AUTO)
                 {
                     BacklightMode = OFF;
@@ -556,7 +583,8 @@ void loop()
             }
             else
             {
-                BacklightMode = (BacklightMode_t)((unsigned int)BacklightMode - 1);
+                BacklightMode =
+                    (BacklightMode_t)((unsigned int)BacklightMode - 1);
                 if ((unsigned int)BacklightMode > AUTO)
                 {
                     BacklightMode = AUTO;
@@ -568,6 +596,7 @@ void loop()
         if (UI::check_for_press(B_BACKLIGHT))
         {
             CurrentState = CLOCK;
+            UI::clear_flags();
             lcd.setCursor(0, 1);
             lcd.print("Alarm At:  ");
             displayTime((void*)&CurrentTime);
@@ -576,6 +605,10 @@ void loop()
         }
         break;
 
+    /**
+     * @brief Alarm active state
+     *
+     */
     case ALARM_TRIGGERED:
         if (UI::check_for_press(B_SNOOZE))
         {
@@ -599,11 +632,15 @@ void loop()
 
         break;
 
+    /**
+     * @brief Alarm snoozing state
+     *
+     */
     case SNOOZEING:
         if (millis()-StateChangeTime > SNOOZE_TIME*MILLIS_PER_SECOND)
         {
             CurrentState = ALARM_TRIGGERED;
-            tone(BUZZER, 1000);
+            tone(BUZZER, 3000);
             lcd.setCursor(0, 1);
             lcd.print("Alarm At:  ");
             displayTime((void*)&AlarmTime, true);
@@ -628,9 +665,13 @@ void loop()
     /*Update Logic*/
 
     switch (BacklightMode)
+    /**
+     * @brief Handles backlight logic
+     *
+     */
     {
     case AUTO:
-        if (analogRead(LIGHT_SENSE)/BRIGHTNESS_PER_PERCENT < BacklightThreshold)
+        if (analogRead(LIGHT_SENSE) < BacklightThreshold)
         {
             digitalWrite(BACKLIGHT_PIN, HIGH);
         }
@@ -730,7 +771,8 @@ void displayTime(void* time_vp, bool alarm_time){
     else
     {
         lcd.setCursor(0, 0);
-        timeString = String("    ") + hour_string + String(":") + minute_string + String(":") + second_string + String("    ");
+        timeString = String("    ") + hour_string + String(":") +
+         minute_string + String(":") + second_string + String("    ");
     }
 
     lcd.print(timeString);
@@ -835,7 +877,8 @@ void UI::update_button(Button *button)
         button->last_state = state;
     }
 
-    if ((state != button->true_state) && ((millis()-button->last_changed) > debounce_delay))
+    if ((state != button->true_state) &&
+        ((millis()-button->last_changed) > debounce_delay))
     {
         button->true_state = button->last_state;
 
