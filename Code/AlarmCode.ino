@@ -370,17 +370,6 @@ void loop()
             CurrentState = SLOW_CHANGE;
         }
 
-        else if (CurrentTime.minutes == AlarmTime.minutes && CurrentTime.hours == AlarmTime.hours && AlarmActive)
-        {
-            if (!AlarmTriggered)
-            {
-                CurrentState = ALARM_TRIGGERED;
-                AlarmTriggered = true;
-                tone(BUZZER, 1000);
-                UI::clear_flags();
-            }
-        }
-
         else if(UI::check_for_press(B_ALARM_SET)){
             UI::clear_flags();
             TimeSetTime  = &AlarmTime;
@@ -396,6 +385,17 @@ void loop()
             lcd.clear();
             diplay_backlight_mode();
             ShowTime = false;
+        }
+
+        else if (CurrentTime.minutes == AlarmTime.minutes && CurrentTime.hours == AlarmTime.hours && AlarmActive)
+        {
+            if (!AlarmTriggered)
+            {
+                CurrentState = ALARM_TRIGGERED;
+                AlarmTriggered = true;
+                tone(BUZZER, 1000);
+                UI::clear_flags();
+            }
         }
 
         else
